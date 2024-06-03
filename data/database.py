@@ -9,6 +9,6 @@ cur.execute(
 cur.execute(f'''CREATE TABLE IF NOT EXISTS messages(message_id INTEGER, user_id INTEGER, receiver TEXT, message TEXT, time TEXT);''')
 conn.commit()
 
-#host = 'https://shohrux1.pythonanywhere.com'
-host = 'http://127.0.0.1:8000'
+host = 'https://shohrux1.pythonanywhere.com'
+#host = 'http://127.0.0.1:8000'
 
