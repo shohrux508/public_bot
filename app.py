@@ -1,3 +1,5 @@
+import time
+
 from aiogram import executor
 
 from loader import dp
@@ -14,6 +16,7 @@ async def on_startup(dispatcher):
 if __name__ == '__main__':
     print('connecting...')
     while True:
+        time.sleep(1)
         try:
             executor.start_polling(dp, on_startup=on_startup)
             break

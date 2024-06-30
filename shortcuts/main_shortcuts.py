@@ -131,53 +131,6 @@ def get_channel_as_text(channel_id):
     return text
 
 
-def get_authors_as_text(user_id, page):
-    if page:
-        response = r.request(method='GET',
-                             url=f'https://plcengineer.pythonanywhere.com/app1/api/v1/authors/?page={page}')
-    else:
-        response = r.request(method='GET', url=f'https://plcengineer.pythonanywhere.com/app1/api/v1/authors/')
-    if response.status_code == 200:
-        authors = response.json()['results']
-        full_text = []
-        full_text.append(f'Список всех авторов: {datetime.now().strftime("%H:%M:%S")}\n')
-        count = 1
-        for i in authors:
-            text = (f'Автор: {i["id"]}\n'
-                    f'Имя: {i["name"]}\n'
-                    f'Био: {i["bio"]}\n'
-                    f'Пол: {i["gender"]}\n'
-                    f'Возраст: {i["age"]}\n---------')
-            full_text.append(text)
-            count += 1
-        full_text.append(f'Всего авторов: {response.json()["count"]}\n'
-                         f'Страница: {response.json()["count"]}')
-        overall_text = '\n'.join(full_text)
-        return overall_text, count
-    return False
-
-
-def get_books_as_text(user_id, page):
-    if page:
-        response = r.request(method='GET', url=f'https://plcengineer.pythonanywhere.com/app1/api/v1/books/?page={page}')
-    else:
-        response = r.request(method='GET', url=f'https://plcengineer.pythonanywhere.com/app1/api/v1/books')
-    if response.status_code == 200:
-        authors = response.json()['results']
-        full_text = []
-        full_text.append(f'Список всех книг: {datetime.now().strftime("%H:%M:%S")}\n')
-        count = 1
-        for i in authors:
-            text = (f'{count}.Книга N:{i["id"]}: {i["title"]}\n'
-                    f'Автор: {i["author"]}\n'
-                    f'Дата создания: {i["date"]}\n---------')
-            count += 1
-            full_text.append(text)
-        full_text.append(f'Всего книг: {response.json()["count"]}\n'
-                         f'Страница: {response.json()["count"]}')
-        overall_text = '\n'.join(full_text)
-        return overall_text, count
-    return response.json()
 
 
 def download_file(file_name):
@@ -193,21 +146,3 @@ def download_file(file_name):
         return False, response.json()
 
 
-def get_book(page, index):
-    response = requests.get(url=f'https://plcengineer.pythonanywhere.com/app1/api/v1/books/?page={page}')
-    try:
-        list = (response.json())['results']
-    except:
-        return response
-    book = list[int(index) - 1]
-    text = (f'Книга N:{book["id"]}: {book["title"]}\n'
-            f'Автор: {book["author"]}\n\n'
-            f'Дата создания: {book["date"]}\n---------')
-    file = book['file']
-    file_name = (file.split('/'))[5]
-    data = download_file(file_name)
-    if data[0] == True:
-        file_path = data[1]
-        return True, text, file_path
-    else:
-        return False, data[1]

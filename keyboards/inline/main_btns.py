@@ -46,50 +46,6 @@ class UserButton():
 
 
 
-def gender_btns():
-    male_btn = InlineKeyboardButton(text='Мужской', callback_data='M')
-    female_btn = InlineKeyboardButton(text='Женский', callback_data='F')
-    cancel_btn = InlineKeyboardButton(text='Отмена', callback_data='break')
-    keyboard = InlineKeyboardMarkup().add(male_btn, female_btn).add(cancel_btn)
-    return keyboard
-
-
-def submit_btns():
-    submit_btn = InlineKeyboardButton(text='Подтвердить сохранение', callback_data='submit')
-    break_btn = InlineKeyboardButton(text='Не сохранять', callback_data='break')
-    keyboard = InlineKeyboardMarkup().add(submit_btn).add(break_btn)
-    return keyboard
-
-
-def sign_btns():
-    sign_in = InlineKeyboardButton(text='Войти', callback_data='sign-in')
-    sign_up = InlineKeyboardButton(text='Зарегистрироваться', callback_data='sign-up')
-    keyboard = InlineKeyboardMarkup().add(sign_in).add(sign_up)
-    return keyboard
-
-
-def manage_authors(current_page):
-    btn1 = InlineKeyboardButton(text="⬅️", callback_data=f'admin/authors/page={current_page - 1}')
-    btn2 = InlineKeyboardButton(text='➡️', callback_data=f'admin/authors/page={current_page + 1}')
-    btn3 = InlineKeyboardButton(text='Поиск', callback_data='authors/search')
-    keyboard = InlineKeyboardMarkup().add(btn1, btn2).add(btn3)
-    return keyboard
-
-
-def manage_books(current_page, response, count):
-    btn1 = InlineKeyboardButton(text="⬅️", callback_data=f'admin/books/page={current_page - 1}')
-    btn2 = InlineKeyboardButton(text='➡️', callback_data=f'admin/books/page={current_page + 1}')
-    btn3 = InlineKeyboardButton(text='Поиск', callback_data='books/search')
-    keyboard = InlineKeyboardMarkup()
-    if response['next'] is not None:
-        keyboard.add(btn2)
-    if response['previous'] is not None:
-        keyboard.add(btn1)
-    for i in range(1, count):
-        keyboard.add(
-            InlineKeyboardButton(text=f'Книга номер: {i}', callback_data=f'get_book={int(i)},pag={current_page}'))
-    return keyboard
-
 
 def detail_btns(id):
     btn1 = InlineKeyboardButton(text='Посмотреть', callback_data=f'detail{id}')

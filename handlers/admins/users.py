@@ -14,6 +14,8 @@ from utils.db_api.manage import search_user, ManageUser
 
 @dp.message_handler(Text(contains='Пользователи'))
 async def users(msg: Message):
+    if not ManageUser(msg.from_user.id).is_admin():
+        return
     message = get_users_as_text(sort_by=False, filter_by=False, page=1, paginate_by=5)
     await msg.answer(message,
                      reply_markup=AdminButton().manage_users_list(sort_by=False, filter_by=False, page=1,

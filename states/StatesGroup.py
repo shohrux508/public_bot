@@ -54,3 +54,6 @@ class assessmentStates(StatesGroup):
     first = State()
     second = State()
     third = State()
+
+class postStates(StatesGroup):
+    get_message = State()
